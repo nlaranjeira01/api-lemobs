@@ -5,6 +5,7 @@ import {
   Body,
   Param,
   ParseIntPipe,
+  Delete,
 } from '@nestjs/common';
 import { AlunosService } from './alunos.service';
 import { ApiTags } from '@nestjs/swagger';
@@ -29,5 +30,10 @@ export class AlunosController {
   @Post()
   createAluno(@Body() createAlunoDto: CreateAlunoDto): Aluno {
     return this.alunosService.createAluno(createAlunoDto);
+  }
+
+  @Delete('/:id')
+  deleteAluno(@Param('id', ParseIntPipe) id: number): void {
+    this.alunosService.deleteAluno(id);
   }
 }

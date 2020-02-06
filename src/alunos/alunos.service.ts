@@ -33,4 +33,10 @@ export class AlunosService {
     this.alunos.push(aluno);
     return aluno;
   }
+
+  deleteAluno(id: number): void {
+    const aluno: Aluno = this.getAlunoById(id);
+
+    this.alunos = this.alunos.filter(aluno => aluno.id !== id);
+  }
 }
