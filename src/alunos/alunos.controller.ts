@@ -1,4 +1,11 @@
-import { Controller, Get, Post, Body } from '@nestjs/common';
+import {
+  Controller,
+  Get,
+  Post,
+  Body,
+  Param,
+  ParseIntPipe,
+} from '@nestjs/common';
 import { AlunosService } from './alunos.service';
 import { ApiTags } from '@nestjs/swagger';
 import { Aluno } from './aluno.model';
@@ -14,9 +21,13 @@ export class AlunosController {
     return this.alunosService.getAllAlunos();
   }
 
+  @Get('/:id')
+  getAlunoById(@Param('id', ParseIntPipe) id: number): Aluno {
+    return this.alunosService.getAlunoById(id);
+  }
+
   @Post()
-  createAluno(@Body() createAlunoDto : CreateAlunoDto) : Aluno{
+  createAluno(@Body() createAlunoDto: CreateAlunoDto): Aluno {
     return this.alunosService.createAluno(createAlunoDto);
   }
-  
 }
