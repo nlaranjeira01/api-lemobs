@@ -1,3 +1,7 @@
+/*
+    a query aninhada "(SELECT FROM pg_database WHERE datname = 'db')" retorna TRUE se a base de dados 'db' já existe
+    caso o resultado do SELECT aninhado seja FALSE, o resultado da query toda será "CREATE DATABASE db", que será executado pelo \gexec
+*/
 SELECT 'CREATE DATABASE db'
 WHERE NOT EXISTS (SELECT FROM pg_database WHERE datname = 'db')\gexec
 

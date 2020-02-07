@@ -1,3 +1,6 @@
+#docker db volume
+/postgres-data
+
 # compiled output
 /dist
 /node_modules

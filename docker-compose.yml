@@ -12,6 +12,8 @@ services:
         ports:
             - '5432:5432'
         restart: unless-stopped
+        networks:
+            - webnet
 
     api:
         build: .
@@ -23,4 +25,9 @@ services:
             - '4000:3000'
         volumes:
             - .:/usr/app
+            - /usr/app/node_modules
         command: npm run start:dev
+        networks:
+            - webnet
+networks: 
+    webnet:
