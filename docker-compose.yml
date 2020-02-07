@@ -1,0 +1,26 @@
+version: "3.7"
+services:
+    pg:
+        image: postgres
+        environment: 
+            POSTGRES_PASSWORD: postgres
+            POSTGRES_USER: postgres
+            POSTGRES_DB: db
+        volumes:
+            - ./db_dump/ddl.sql:/docker-entrypoint-initdb.d/ddl.sql
+            - ./postgres-data:/var/lib/postgres/data
+        ports:
+            - '5432:5432'
+        restart: unless-stopped
+
+    api:
+        build: .
+        environment:
+            DB_HOST: pg
+        depends_on: 
+            - pg
+        ports:
+            - '4000:3000'
+        volumes:
+            - .:/usr/app
+        command: npm run start:dev
