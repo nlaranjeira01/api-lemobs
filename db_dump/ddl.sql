@@ -21,5 +21,5 @@ CREATE TABLE IF NOT EXISTS endereco (
     numero VARCHAR (10),
     complemento VARCHAR (50),
     bairro VARCHAR(255) NOT NULL,
-    id_aluno INTEGER NOT NULL REFERENCES aluno(id)
+    aluno_id INTEGER NOT NULL REFERENCES aluno(id)
 );
