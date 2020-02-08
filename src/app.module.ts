@@ -5,6 +5,10 @@ import { typeOrmConfig } from './config/typeorm.config';
 import { EnderecosModule } from './enderecos/enderecos.module';
 
 @Module({
-  imports: [TypeOrmModule.forRoot(typeOrmConfig), AlunosModule, EnderecosModule],
+  imports: [
+    TypeOrmModule.forRoot(typeOrmConfig),
+    AlunosModule,
+    EnderecosModule,
+  ],
 })
 export class AppModule {}

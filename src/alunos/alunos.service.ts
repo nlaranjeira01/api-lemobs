@@ -11,10 +11,10 @@ export class AlunosService {
     private alunoRepository: AlunoRepository,
   ) {}
 
-  async getAlunos() : Promise<Aluno[]> {
+  async getAlunos(): Promise<Aluno[]> {
     return this.alunoRepository.getAlunos();
   }
-  
+
   async getAlunoById(id: number): Promise<Aluno> {
     const aluno: Aluno = await this.alunoRepository.findOne(id);
 
@@ -30,10 +30,6 @@ export class AlunosService {
   }
 
   async deleteAluno(id: number): Promise<void> {
-    const result = await this.alunoRepository.delete(id);
-
-    if (result.affected === 0) {
-      throw new NotFoundException(`Aluno(a) com ID = ${id} não existe.`);
-    }
+    return this.alunoRepository.deleteAluno(id);
   }
 }

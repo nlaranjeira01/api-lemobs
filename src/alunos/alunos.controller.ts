@@ -32,7 +32,7 @@ export class AlunosController {
   @Post()
   @UsePipes(new ValidationPipe({ transform: true }))
   createAluno(@Body() createAlunoDto: CreateAlunoDto): Promise<Aluno> {
-    console.log(createAlunoDto.data_nascimento);
+    console.log(createAlunoDto.enderecos[0].numero);
     return this.alunosService.createAluno(createAlunoDto);
   }
 
@@ -40,5 +40,4 @@ export class AlunosController {
   deleteAluno(@Param('id', ParseIntPipe) id: number): Promise<void> {
     return this.alunosService.deleteAluno(id);
   }
-  
 }
