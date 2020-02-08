@@ -12,11 +12,11 @@ export class CreateAlunoDto {
   nome: string;
 
   @ApiProperty({ example: '02/04/2001' })
-  @IsDateString({ 
+  @IsDateString({
     message: "The date must follow the 'dd/mm/yyyy' format and must be valid.",
   })
   @IsNotEmpty()
-  data_nascimento: Date;
+  data_nascimento: string;
 
   @ApiProperty({ example: '798.729.530-23' })
   @IsCPF({ message: 'The CPF number must be valid.' })
