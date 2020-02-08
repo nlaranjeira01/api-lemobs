@@ -1,37 +1,34 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
-import { Aluno } from './aluno.model';
 import { CreateAlunoDto } from './dto/create-aluno.dto';
+import { AlunoRepository } from './aluno.repository';
+import { InjectRepository } from '@nestjs/typeorm';
+import { Aluno } from './aluno.entity';
 
 @Injectable()
 export class AlunosService {
-  private alunos: Aluno[] = [];
+  constructor(
+    @InjectRepository(AlunoRepository)
+    private alunoRepository: AlunoRepository,
+  ) {}
 
-  getAllAlunos(): Aluno[] {
-    return this.alunos;
-  }
-
-  getAlunoById(id: number): Aluno {
-    const aluno: Aluno = this.alunos.find(aluno => aluno.id === id);
+  async getAlunoById(id: number): Promise<Aluno> {
+    const aluno: Aluno = await this.alunoRepository.findOne(id);
 
     if (!aluno) {
       throw new NotFoundException(`Aluno(a) com ID = ${id} não existe.`);
     }
+
     return aluno;
   }
 
-  createAluno(createAlunoDto: CreateAlunoDto): Aluno {
-    const { nome, data_nascimento, cpf, nota } = createAlunoDto;
+  async createAluno(createAlunoDto: CreateAlunoDto): Promise<Aluno> {
+    return this.alunoRepository.createAluno(createAlunoDto);
+  }
 
-    const aluno: Aluno = {
-      id: this.alunos.length,
-      nome,
-      data_nascimento,
-      cpf,
-      nota,
-    };
+  /*   private alunos: Aluno[] = [];
 
-    this.alunos.push(aluno);
-    return aluno;
+  getAllAlunos(): Aluno[] {
+    return this.alunos;
   }
 
   deleteAluno(id: number): void {
@@ -39,4 +36,5 @@ export class AlunosService {
 
     this.alunos = this.alunos.filter(aluno => aluno.id !== id);
   }
+   */
 }
