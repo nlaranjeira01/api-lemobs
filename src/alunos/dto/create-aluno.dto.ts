@@ -1,17 +1,18 @@
 import { ApiProperty } from '@nestjs/swagger';
-import { IsNotEmpty, IsString, IsNumber } from 'class-validator';
-import { IsCPF } from '../validators/is-cpf.validator';
-import { IsDate } from '../validators/is-date.validator';
-import { IsInRange } from '../validators/is-in-range.validator';
+import { IsNotEmpty, IsString, IsNumber, IsAlpha } from 'class-validator';
+import { Type } from 'class-transformer';
+import { IsCPF } from '../validation/is-cpf.validation';
+import { IsDateString } from '../validation/is-datestring.validation';
+import { IsInRange } from '../validation/is-in-range.validation';
 
 export class CreateAlunoDto {
   @ApiProperty({ example: 'Joana' })
-  @IsNotEmpty()
   @IsString()
+  @IsNotEmpty()
   nome: string;
 
   @ApiProperty({ example: '02/04/2001' })
-  @IsDate({
+  @IsDateString({ 
     message: "The date must follow the 'dd/mm/yyyy' format and must be valid.",
   })
   @IsNotEmpty()
