@@ -1,6 +1,7 @@
 version: "3.7"
 services:
     pg:
+        container_name: api-lemobs_pg
         image: postgres
         environment: 
             POSTGRES_PASSWORD: postgres
@@ -13,21 +14,40 @@ services:
             - '5432:5432'
         restart: unless-stopped
         networks:
-            - webnet
-
-    api:
-        build: .
-        environment:
-            DB_HOST: pg
+            - pg-net
+    
+    pgadmin:
+        container_name: api-lemobs_pgadmin
+        image: dpage/pgadmin4
+        environment: 
+            PGADMIN_DEFAULT_EMAIL: pgadmin@email.com
+            PGADMIN_DEFAULT_PASSWORD: pgadminpw
+        ports:
+            - '52278:80'
         depends_on: 
             - pg
-        ports:
-            - '4000:3000'
-        volumes:
-            - .:/usr/app
-            - /usr/app/node_modules
-        command: npm run start:dev
         networks:
-            - webnet
+            - pg-net
+
+#    api:
+#        container_name: api-lemobs_api
+#        build: .
+#        environment:
+#            DB_HOST: pg
+#        depends_on: 
+#            - pg
+#        ports:
+#            - '4000:3000'
+#        volumes:
+#            - .:/usr/app
+#            - /usr/app/node_modules
+#        command: npm run start:dev
+#        
+#        restart: unless-stopped
+#
+#        networks:
+#            - pg-net
+
 networks: 
-    webnet:
+    pg-net:
+        driver: bridge

@@ -40,4 +40,5 @@ export class AlunosController {
   deleteAluno(@Param('id', ParseIntPipe) id: number): Promise<void> {
     return this.alunosService.deleteAluno(id);
   }
+  
 }

@@ -11,9 +11,10 @@ export class AlunosService {
     private alunoRepository: AlunoRepository,
   ) {}
 
-  async getAlunos(): Promise<Aluno[]> {
+  async getAlunos() : Promise<Aluno[]> {
     return this.alunoRepository.getAlunos();
   }
+  
   async getAlunoById(id: number): Promise<Aluno> {
     const aluno: Aluno = await this.alunoRepository.findOne(id);
 
