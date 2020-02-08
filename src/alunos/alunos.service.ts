@@ -11,6 +11,9 @@ export class AlunosService {
     private alunoRepository: AlunoRepository,
   ) {}
 
+  async getAlunos(): Promise<Aluno[]> {
+    return this.alunoRepository.getAlunos();
+  }
   async getAlunoById(id: number): Promise<Aluno> {
     const aluno: Aluno = await this.alunoRepository.findOne(id);
 
@@ -25,16 +28,11 @@ export class AlunosService {
     return this.alunoRepository.createAluno(createAlunoDto);
   }
 
-  /*   private alunos: Aluno[] = [];
+  async deleteAluno(id: number): Promise<void> {
+    const result = await this.alunoRepository.delete(id);
 
-  getAllAlunos(): Aluno[] {
-    return this.alunos;
+    if (result.affected === 0) {
+      throw new NotFoundException(`Aluno(a) com ID = ${id} não existe.`);
+    }
   }
-
-  deleteAluno(id: number): void {
-    const aluno: Aluno = this.getAlunoById(id);
-
-    this.alunos = this.alunos.filter(aluno => aluno.id !== id);
-  }
-   */
 }
