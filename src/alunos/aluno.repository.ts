@@ -133,7 +133,7 @@ export class AlunoRepository extends Repository<Aluno> {
 
   private convertDtoToEntity(alunoDto: AlunoDto): Aluno {
     const { nome, data_nascimento, cpf, nota, enderecos } = alunoDto;
-    const [year, month, day] = data_nascimento.split('-');
+    const [day, month, year] = data_nascimento.split('/');
     const aluno = new Aluno();
     aluno.nome = nome;
     aluno.data_nascimento = new Date(

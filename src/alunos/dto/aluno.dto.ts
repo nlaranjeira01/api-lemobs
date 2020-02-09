@@ -50,12 +50,12 @@ export class AlunoDto {
   nome: string;
 
   @ApiProperty({
-    description: "Data de nascimento do aluno(a) em formato 'yyyy-mm-dd'",
-    example: '2001-04-02',
+    description: "Data de nascimento do aluno(a) em formato 'dd/mm/yyyy'",
+    example: '02/04/2001',
   })
   @IsDateString({
     message:
-      "data_nascimento deve seguir o formato 'yyyy-mm-dd' e deve ser válida",
+      "data_nascimento deve seguir o formato 'dd/mm/yyyy' e deve ser válida",
   })
   @IsNotEmpty()
   data_nascimento: string;

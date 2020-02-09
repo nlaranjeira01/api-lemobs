@@ -11,7 +11,7 @@ CREATE TABLE IF NOT EXISTS aluno (
     id SERIAL NOT NULL PRIMARY KEY,
     nome VARCHAR(255) NOT NULL,
     data_nascimento DATE NOT NULL,
-    cpf VARCHAR(14) UNIQUE NOT NULL,
+    cpf VARCHAR(11) UNIQUE NOT NULL,
     nota FLOAT NOT NULL
 );
 
@@ -19,7 +19,7 @@ CREATE TABLE IF NOT EXISTS endereco (
     id SERIAL NOT NULL PRIMARY KEY,
     rua VARCHAR (255) NOT NULL,
     numero VARCHAR (10),
-    complemento VARCHAR (50),
+    complemento VARCHAR (255),
     bairro VARCHAR(255) NOT NULL,
     aluno_id INTEGER NOT NULL REFERENCES aluno(id)
 );

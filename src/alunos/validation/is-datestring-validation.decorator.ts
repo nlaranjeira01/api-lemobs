@@ -10,21 +10,21 @@ import * as moment from 'moment';
 @ValidatorConstraint({ async: false })
 export class IsDateStringConstraint implements ValidatorConstraintInterface {
   validate(date: string, args: ValidationArguments): boolean {
-    const parts = date.split('-');
+    const parts = date.split('/');
 
     if (parts.length !== 3) {
       return false;
     }
 
     if (
-      parts[0].length !== 4 ||
+      parts[0].length !== 2 ||
       parts[1].length !== 2 ||
-      parts[2].length !== 2
+      parts[2].length !== 4
     ) {
       return false;
     }
 
-    const moment_date = moment(date, 'YYYY-MM-DD');
+    const moment_date = moment(date, 'DD/MM/YYYY');
 
     return moment_date.isValid();
   }

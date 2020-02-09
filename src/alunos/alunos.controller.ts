@@ -10,6 +10,8 @@ import {
   ValidationPipe,
   Put,
   Query,
+  UseInterceptors,
+  ClassSerializerInterceptor,
 } from '@nestjs/common';
 import { AlunosService } from './alunos.service';
 import { ApiTags, ApiParam, ApiResponse, ApiQuery } from '@nestjs/swagger';
@@ -25,6 +27,7 @@ export class AlunosController {
   @ApiResponse({ status: 200, description: 'Todos os alunos foram retornados' })
   @ApiResponse({ status: 500, description: 'Erro interno' })
   @Get()
+  @UseInterceptors(ClassSerializerInterceptor)
   getAlunos(): Promise<Aluno[]> {
     return this.alunosService.getAlunos();
   }
@@ -36,6 +39,7 @@ export class AlunosController {
   })
   @ApiResponse({ status: 500, description: 'Erro interno' })
   @Get('/media')
+  @UseInterceptors(ClassSerializerInterceptor)
   getAboveAverage(): Promise<Aluno[]> {
     return this.alunosService.getAboveAverage();
   }
@@ -51,6 +55,7 @@ export class AlunosController {
   @ApiParam({ name: 'nota', type: 'number' })
   @Get('/nota/:criterio/:nota')
   @UsePipes(new ValidationPipe({ transform: true }))
+  @UseInterceptors(ClassSerializerInterceptor)
   filterAlunosByNota(
     @Param() filterAlunosByNotaDto: FilterAlunosByNotaDto,
   ): Promise<Aluno[]> {
@@ -74,6 +79,7 @@ export class AlunosController {
   @ApiResponse({ status: 404, description: 'Aluno(a) não encontrado' })
   @ApiResponse({ status: 500, description: 'Erro interno' })
   @Get('/:aluno_id')
+  @UseInterceptors(ClassSerializerInterceptor)
   getAlunoById(@Param('aluno_id', ParseIntPipe) id: number): Promise<Aluno> {
     return this.alunosService.getAlunoById(id);
   }
@@ -84,6 +90,7 @@ export class AlunosController {
   @ApiResponse({ status: 500, description: 'Erro interno' })
   @Post()
   @UsePipes(new ValidationPipe({ transform: true }))
+  @UseInterceptors(ClassSerializerInterceptor)
   createAluno(@Body() alunoDto: AlunoDto): Promise<Aluno> {
     return this.alunosService.createAluno(alunoDto);
   }
@@ -102,6 +109,7 @@ export class AlunosController {
   @ApiResponse({ status: 500, description: 'Erro interno' })
   @Put('/:aluno_id')
   @UsePipes(new ValidationPipe({ transform: true }))
+  @UseInterceptors(ClassSerializerInterceptor)
   putAluno(
     @Param('aluno_id', ParseIntPipe) id: number,
     @Body() alunoDto: AlunoDto,

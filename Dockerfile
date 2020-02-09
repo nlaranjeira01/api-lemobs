@@ -5,3 +5,4 @@ COPY package*.json ./
 RUN apk --no-cache add --virtual builds-deps build-base python
 RUN npm ci
 COPY . .
+CMD ["nmp", "run", "start:prod"]

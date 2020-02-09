@@ -15,7 +15,8 @@ services:
         restart: unless-stopped
         networks:
             - pg_net
-    
+
+#Mais fácil para visualizar os dados rapidamente    
     pgadmin:
         container_name: api-lemobs_pgadmin
         image: dpage/pgadmin4
@@ -41,7 +42,7 @@ services:
         volumes:
             - .:/usr/app
             - /usr/app/node_modules
-        command: npm run start:dev
+        command: npm run start:prod
         
         restart: unless-stopped
 

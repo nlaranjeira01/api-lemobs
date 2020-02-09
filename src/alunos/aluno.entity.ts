@@ -6,6 +6,8 @@ import {
   OneToMany,
 } from 'typeorm';
 import { Endereco } from '../enderecos/endereco.entity';
+import { Transform } from 'class-transformer';
+import * as moment from 'moment';
 
 @Entity()
 export class Aluno extends BaseEntity {
@@ -15,6 +17,7 @@ export class Aluno extends BaseEntity {
   @Column()
   nome: string;
 
+  @Transform(data_nascimento => moment(data_nascimento).format('DD/MM/YYYY')) //todas as rotas que retornam uma entidade de Aluno terão as datas transformadas de Date para dd/mm/yyyy
   @Column()
   data_nascimento: Date;
 
