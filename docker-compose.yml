@@ -29,24 +29,24 @@ services:
         networks:
             - pg_net
 
-#    api:
-#        container_name: api-lemobs_api
-#        build: .
-#        environment:
-#            DB_HOST: pg
-#        depends_on: 
-#            - pg
-#        ports:
-#            - '4000:3000'
-#        volumes:
-#            - .:/usr/app
-#            - /usr/app/node_modules
-#        command: npm run start:dev
-#        
-#        restart: unless-stopped
-#
-#        networks:
-#            - pg_net
+    api:
+        container_name: api-lemobs_api
+        build: .
+        environment:
+            DB_HOST: pg
+        depends_on: 
+            - pg
+        ports:
+            - '4000:3000'
+        volumes:
+            - .:/usr/app
+            - /usr/app/node_modules
+        command: npm run start:dev
+        
+        restart: unless-stopped
+
+        networks:
+            - pg_net
 
 networks: 
     pg_net:
