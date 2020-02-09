@@ -3,33 +3,39 @@ import {
   IsNotEmpty,
   IsString,
   IsOptional,
-  IsPositive,
   IsInt,
   Min,
 } from 'class-validator';
 
 export class CreateEnderecoDto {
-  @ApiProperty({ example: 'Rua Major Ávila' })
+  @ApiProperty({ description: 'Nome da rua', example: 'Rua Major Ávila' })
   @IsString()
   @IsNotEmpty()
   rua: string;
 
-  @ApiProperty({ example: '67', required: false })
-  @IsString()
+
+  @ApiProperty({
+    description: 'Número da casa',
+    example: '67',
+    required: false,
+  })  @IsString()
   @IsOptional()
   numero?: string;
 
-  @ApiProperty({ example: 'Bl 2, Apt 101', required: false })
-  @IsString()
+  @ApiProperty({
+    description: 'Informação adicional sobre o local',
+    example: 'Bl 2, Apt 101',
+    required: false,
+  })  @IsString()
   @IsOptional()
   complemento?: string;
 
-  @ApiProperty({ example: 'Tijuca' })
+  @ApiProperty({ description: 'Nome do bairro', example: 'Tijuca' })
   @IsString()
   @IsNotEmpty()
   bairro: string;
 
-  @ApiProperty({ example: 0 })
+  @ApiProperty({ description: 'ID do aluno', example: 0 })
   @IsNotEmpty()
   @IsInt()
   @Min(0)

@@ -20,4 +20,7 @@ export class EnderecosService {
   async getEnderecos(): Promise<Endereco[]> {
     return this.enderecoRepository.getEnderecos();
   }
+  async deleteEndereco(id: number): Promise<void> {
+    return this.enderecoRepository.deleteEndereco(id);
+  }
 }
