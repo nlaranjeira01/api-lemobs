@@ -123,7 +123,7 @@ export class AlunoRepository extends Repository<Aluno> {
     return await this.query(
       `SELECT * FROM endereco WHERE endereco.aluno_id = ${id}` + (bairro
         ? ` AND endereco.bairro LIKE '${bairro}%'`
-        : ''),
+        : '')
     );
   }
 

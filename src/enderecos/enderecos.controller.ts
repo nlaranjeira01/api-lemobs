@@ -8,8 +8,9 @@ import {
   Param,
   ParseIntPipe,
   Delete,
+  Query,
 } from '@nestjs/common';
-import { ApiTags, ApiResponse } from '@nestjs/swagger';
+import { ApiTags, ApiResponse, ApiQuery } from '@nestjs/swagger';
 import { EnderecosService } from './enderecos.service';
 import { Endereco } from './endereco.entity';
 import { CreateEnderecoDto } from './dto/create-endereco.dto';
@@ -21,9 +22,10 @@ export class EnderecosController {
 
   @ApiResponse({status: 200, description: 'Todos os endereços foram retornados'})
   @ApiResponse({status: 500, description: 'Erro interno'})
+  @ApiQuery({ name: 'bairro', required: false })
   @Get()
-  getEnderecos(): Promise<Endereco[]> {
-    return this.enderecosService.getEnderecos();
+  getEnderecos(@Query('bairro') bairro: string): Promise<Endereco[]> {
+    return this.enderecosService.getEnderecos(bairro);
   }
 
   @ApiResponse({status: 201, description: 'Endereço criado'})

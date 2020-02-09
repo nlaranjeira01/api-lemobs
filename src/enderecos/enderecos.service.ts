@@ -17,8 +17,8 @@ export class EnderecosService {
     return this.enderecoRepository.createEndereco(createEnderecoDto);
   }
 
-  async getEnderecos(): Promise<Endereco[]> {
-    return this.enderecoRepository.getEnderecos();
+  async getEnderecos(bairro : string): Promise<Endereco[]> {
+    return this.enderecoRepository.getEnderecos(bairro);
   }
   async deleteEndereco(id: number): Promise<void> {
     return this.enderecoRepository.deleteEndereco(id);

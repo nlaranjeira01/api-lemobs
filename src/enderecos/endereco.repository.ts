@@ -9,7 +9,12 @@ import {
 
 @EntityRepository(Endereco)
 export class EnderecoRepository extends Repository<Endereco> {
-  async getEnderecos(): Promise<Endereco[]> {
+  async getEnderecos(bairro: string): Promise<Endereco[]> {
+    
+    if(bairro){
+      return await this.query(`SELECT * FROM endereco WHERE endereco.bairro LIKE '${bairro}%'`);
+    }
+
     return await this.find();
   }
 
