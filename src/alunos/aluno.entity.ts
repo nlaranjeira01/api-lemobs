@@ -27,7 +27,7 @@ export class Aluno extends BaseEntity {
   @OneToMany(
     type => Endereco,
     endereco => endereco.aluno,
-    { eager: true, cascade: ["insert", "update"] },
+    { eager: true, cascade: ['insert', 'update'] },
   )
   enderecos: Endereco[];
 }

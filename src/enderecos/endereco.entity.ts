@@ -33,4 +33,7 @@ export class Endereco extends BaseEntity {
   )
   @JoinColumn({ name: 'aluno_id' }) //por padrão o TypeORM usaria alunoId, mas em respeito ao enunciado do desafio, aluno_id será usado
   aluno: Aluno;
+
+  @Column()
+  aluno_id: number;
 }

@@ -7,7 +7,9 @@ async function bootstrap() {
 
   const options = new DocumentBuilder()
     .setTitle('API de Alunos')
-    .setDescription('Manipulação de alunos e seus respectivos endereços')
+    .setDescription(
+      'Manipulação de informações de alunos e seus respectivos endereços',
+    )
     .setVersion('1.0')
     .addTag('Alunos')
     .addTag('Endereços')
