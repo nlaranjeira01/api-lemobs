@@ -4,7 +4,15 @@
   * Mac/Windows: Docker Desktop \(instruções em [https://docs.docker.com/install/](https://docs.docker.com/install/)\).  
   * Ubuntu:  
     * docker: [https://www.digitalocean.com/community/tutorials/how-to-install-and-use-docker-on-ubuntu-18-04](https://www.digitalocean.com/community/tutorials/how-to-install-and-use-docker-on-ubuntu-18-04).  
-    * docker-compose: [https://www.digitalocean.com/community/tutorials/how-to-install-docker-compose-on-ubuntu-18-04-pt](https://www.digitalocean.com/community/tutorials/how-to-install-docker-compose-on-ubuntu-18-04-pt).
+    * docker-compose:  
+    Baixe o docker-compose (versão 1.25.4 para suportar o docker-compose.yml versão 3.7):
+    ```bash 
+    $ sudo curl -L https://github.com/docker/compose/releases/download/1.25.4/docker-compose-`uname -s`-`uname -m` -o /usr/local/bin/docker-compose
+    ```  
+    Permita a execução do docker-compose:
+    ```bash
+    $ sudo chmod +x /usr/local/bin/docker-compose
+    ```
 * Baixe este repositório, extraia e entre na pasta extraída.
 * Depois utilize o docker-compose para iniciar os contêineres:
 ```bash
