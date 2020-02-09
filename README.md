@@ -1,6 +1,10 @@
 # Desafio Lemobs - API de Alunos
 ## Instalação
-* Primeiro instale o docker \(instruções em [https://docs.docker.com/install/](https://docs.docker.com/install/)\) .
+* Primeiro instale o docker:  
+  * Mac/Windows: Docker Desktop \(instruções em [https://docs.docker.com/install/](https://docs.docker.com/install/)\).  
+  * Ubuntu:  
+    * docker: [https://www.digitalocean.com/community/tutorials/how-to-install-and-use-docker-on-ubuntu-18-04](https://www.digitalocean.com/community/tutorials/how-to-install-and-use-docker-on-ubuntu-18-04).  
+    * docker-compose: [https://www.digitalocean.com/community/tutorials/how-to-install-docker-compose-on-ubuntu-18-04-pt](https://www.digitalocean.com/community/tutorials/how-to-install-docker-compose-on-ubuntu-18-04-pt).
 * Baixe este repositório, extraia e entre na pasta extraída.
 * Depois utilize o docker-compose para iniciar os contêineres:
 ```bash
