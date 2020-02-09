@@ -14,7 +14,7 @@
     $ sudo chmod +x /usr/local/bin/docker-compose
     ```
 * Baixe este repositório, extraia e entre na pasta extraída.
-* Depois utilize o docker-compose para iniciar os contêineres:
+* Depois utilize o docker-compose para iniciar os contêineres \(no ubuntu pode ser necessário utilizar esse comando com sudo\):
 ```bash
 $ docker-compose up
 ```
