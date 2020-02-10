@@ -23,6 +23,10 @@ $ docker-compose up
 
 A api está configurada para ser acessada na porta 4000, e a documentação do swagger está configurada no caminho /api, portanto, para acessar a documentação da api, dirija-se ao URL [localhost:4000/api](http://localhost:4000/api).
 
+### Demo
+
+Uma demonstração da api foi upada na AWS: [http://52.22.38.66:4000/api](http://52.22.38.66:4000/api)
+
 ## Informações Adicionais
 
 ### PgAdmin
