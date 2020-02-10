@@ -25,7 +25,7 @@ A api está configurada para ser acessada na porta 4000, e a documentação do s
 
 ### Demo
 
-Uma demonstração da api foi upada na AWS: [http://52.22.38.66:4000/api](http://52.22.38.66:4000/api)
+Uma demonstração da api foi upada na AWS: [http://apilemobs.tk/api](http://apilemobs.tk/api)
 
 ## Informações Adicionais
 
