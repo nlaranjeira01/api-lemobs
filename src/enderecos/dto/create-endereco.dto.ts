@@ -1,11 +1,5 @@
 import { ApiProperty } from '@nestjs/swagger';
-import {
-  IsNotEmpty,
-  IsString,
-  IsOptional,
-  IsInt,
-  Min,
-} from 'class-validator';
+import { IsNotEmpty, IsString, IsOptional, IsInt, Min } from 'class-validator';
 
 export class CreateEnderecoDto {
   @ApiProperty({ description: 'Nome da rua', example: 'Rua Major Ávila' })
@@ -13,12 +7,12 @@ export class CreateEnderecoDto {
   @IsNotEmpty()
   rua: string;
 
-
   @ApiProperty({
     description: 'Número da casa',
     example: '67',
     required: false,
-  })  @IsString()
+  })
+  @IsString()
   @IsOptional()
   numero?: string;
 
@@ -26,7 +20,8 @@ export class CreateEnderecoDto {
     description: 'Informação adicional sobre o local',
     example: 'Bl 2, Apt 101',
     required: false,
-  })  @IsString()
+  })
+  @IsString()
   @IsOptional()
   complemento?: string;
 

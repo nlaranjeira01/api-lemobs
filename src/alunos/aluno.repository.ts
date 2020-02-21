@@ -53,7 +53,7 @@ export class AlunoRepository extends Repository<Aluno> {
   }
 
   async getAboveAverage(): Promise<Aluno[]> {
-    const alunos : Aluno[] = await this.query(
+    const alunos: Aluno[] = await this.query(
       'SELECT * FROM aluno\
       WHERE aluno.nota > \
       (SELECT AVG(aluno.nota) FROM aluno)',
@@ -121,9 +121,8 @@ export class AlunoRepository extends Repository<Aluno> {
   async getEnderecos(id: number, bairro: string) {
     console.log(bairro);
     return await this.query(
-      `SELECT * FROM endereco WHERE endereco.aluno_id = ${id}` + (bairro
-        ? ` AND endereco.bairro LIKE '${bairro}%'`
-        : '')
+      `SELECT * FROM endereco WHERE endereco.aluno_id = ${id}` +
+        (bairro ? ` AND endereco.bairro LIKE '${bairro}%'` : ''),
     );
   }
 
