@@ -68,16 +68,24 @@ export class AlunoRepository extends Repository<Aluno> {
       aluno.enderecos = await this.getEnderecos(aluno.id, null);
     }
 
-    return plainToClass(Aluno, alunos);
+    return plainToClass(Aluno, alunos); //a query acima retorna plain objects, logo é necessário convertê-los para a classe Aluno
   }
 
   async filterAlunosByNota(
     filterAlunosByNotaDto: FilterAlunosByNotaDto,
   ): Promise<Aluno[]> {
-    const { criterio, nota } = filterAlunosByNotaDto;
-    const alunos: Aluno[] = await this.query(`
-      SELECT * FROM aluno
-      WHERE aluno.nota ${criterio} ${nota}`);
+    const {criterio, nota} = filterAlunosByNotaDto;
+    
+    if(['<', '>'].indexOf(criterio) < 0){
+      throw new InternalServerErrorException();
+    }
+
+    const query = this.createQueryBuilder('aluno')
+      .select('*')
+      .where('aluno.nota ' + criterio + ' :nota', {nota});
+
+      console.log(query.getSql());
+    const alunos: Aluno[] = await query.execute();
 
     for (const aluno of alunos) {
       aluno.enderecos = await this.getEnderecos(aluno.id, null);
