@@ -64,9 +64,9 @@ export class AlunoRepository extends Repository<Aluno> {
 
     const alunos: Aluno[] = await query.execute();
 
-    const enderecosList : Endereco[][] = await this.getEnderecosForMany(alunos);
-    
-    for(let i = 0; i < alunos.length; i++){
+    const enderecosList: Endereco[][] = await this.getEnderecosForMany(alunos);
+
+    for (let i = 0; i < alunos.length; i++) {
       alunos[i].enderecos = enderecosList[i];
     }
 
@@ -76,27 +76,27 @@ export class AlunoRepository extends Repository<Aluno> {
   async filterAlunosByNota(
     filterAlunosByNotaDto: FilterAlunosByNotaDto,
   ): Promise<Aluno[]> {
-    const {criterio, nota} = filterAlunosByNotaDto;
-    
-    if(['<', '>'].indexOf(criterio) < 0){ //na realidade a validação só permite os valores > e < vindos dos requests, mas só por precaução...
+    const { criterio, nota } = filterAlunosByNotaDto;
+
+    if (['<', '>'].indexOf(criterio) < 0) {
+      //na realidade a validação só permite os valores > e < vindos dos requests, mas só por precaução...
       throw new InternalServerErrorException();
     }
 
     const query = this.createQueryBuilder('aluno')
       .select('*')
-      .where('aluno.nota ' + criterio + ' :nota', {nota});
+      .where('aluno.nota ' + criterio + ' :nota', { nota });
 
-      console.log(query.getSql());
+    console.log(query.getSql());
     const alunos: Aluno[] = await query.execute();
 
-    const enderecosList : Endereco[][] = await this.getEnderecosForMany(alunos);
-    
-    for(let i = 0; i < alunos.length; i++){
+    const enderecosList: Endereco[][] = await this.getEnderecosForMany(alunos);
+
+    for (let i = 0; i < alunos.length; i++) {
       alunos[i].enderecos = enderecosList[i];
     }
 
     return plainToClass(Aluno, alunos); //a query acima retorna plain objects, logo é necessário convertê-los para a classe Aluno
-
   }
 
   /*
@@ -127,34 +127,40 @@ export class AlunoRepository extends Repository<Aluno> {
       .where('aluno.id = :id', { id: id })
       .execute();
 
-    const savePromises : Promise<Endereco>[] = [];
+    const savePromises: Promise<Endereco>[] = [];
 
     for (const endereco of aluno.enderecos) {
       endereco.aluno = aluno;
       savePromises.push(endereco.save());
     }
 
-    await Promise.all(savePromises).then(()=>{
-      for(const endereco of aluno.enderecos){
+    await Promise.all(savePromises).then(() => {
+      for (const endereco of aluno.enderecos) {
         delete endereco.aluno;
       }
-    })
+    });
 
     return aluno;
   }
 
-  async getEnderecos(id: number, bairro: string) : Promise<Endereco[]>{
-    let query = this.manager.createQueryBuilder().select('*').from('endereco', null).where('endereco.aluno_id = :id', {id});
+  async getEnderecos(id: number, bairro: string): Promise<Endereco[]> {
+    let query = this.manager
+      .createQueryBuilder()
+      .select('*')
+      .from('endereco', null)
+      .where('endereco.aluno_id = :id', { id });
 
-    if(bairro){
-      query.andWhere('endereco.bairro LIKE :bairro', {bairro: bairro + '%'});
+    if (bairro) {
+      query.andWhere('endereco.bairro LIKE :bairro', { bairro: bairro + '%' });
     }
 
     return await query.execute();
   }
 
   private async getAlunoByCpf(cpf: string): Promise<Aluno[]> {
-    const query = this.createQueryBuilder('aluno').select('*').where('aluno.cpf = :cpf', {cpf});
+    const query = this.createQueryBuilder('aluno')
+      .select('*')
+      .where('aluno.cpf = :cpf', { cpf });
 
     return await query.execute();
   }
@@ -197,14 +203,13 @@ export class AlunoRepository extends Repository<Aluno> {
       .execute();
   }
 
-  private async getEnderecosForMany(alunos : Aluno[]) : Promise<Endereco[][]>{
-    const enderecosPromises : Promise<Endereco[]>[]= [];
-    
-    for(const aluno of alunos){
+  private async getEnderecosForMany(alunos: Aluno[]): Promise<Endereco[][]> {
+    const enderecosPromises: Promise<Endereco[]>[] = [];
+
+    for (const aluno of alunos) {
       enderecosPromises.push(this.getEnderecos(aluno.id, null));
     }
 
     return await Promise.all(enderecosPromises);
-
   }
 }

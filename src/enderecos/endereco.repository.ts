@@ -10,13 +10,13 @@ import {
 @EntityRepository(Endereco)
 export class EnderecoRepository extends Repository<Endereco> {
   async getEnderecos(bairro: string): Promise<Endereco[]> {
+    const query = this.createQueryBuilder('endereco').select('*');
+
     if (bairro) {
-      return await this.query(
-        `SELECT * FROM endereco WHERE endereco.bairro LIKE '${bairro}%'`,
-      );
+      query.andWhere('endereco.bairro LIKE :bairro', { bairro: bairro + '%' });
     }
 
-    return await this.find();
+    return await query.execute();
   }
 
   async createEndereco(
