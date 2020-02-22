@@ -76,7 +76,7 @@ export class AlunoRepository extends Repository<Aluno> {
   ): Promise<Aluno[]> {
     const {criterio, nota} = filterAlunosByNotaDto;
     
-    if(['<', '>'].indexOf(criterio) < 0){
+    if(['<', '>'].indexOf(criterio) < 0){ //na realidade a validação só permite os valores > e < vindos dos requests, mas só por precaução...
       throw new InternalServerErrorException();
     }
 
@@ -131,16 +131,20 @@ export class AlunoRepository extends Repository<Aluno> {
     return aluno;
   }
 
-  async getEnderecos(id: number, bairro: string) {
-    console.log(bairro);
-    return await this.query(
-      `SELECT * FROM endereco WHERE endereco.aluno_id = ${id}` +
-        (bairro ? ` AND endereco.bairro LIKE '${bairro}%'` : ''),
-    );
+  async getEnderecos(id: number, bairro: string) : Promise<Endereco[]>{
+    let query = this.manager.createQueryBuilder().select('*').from('endereco', null).where('endereco.aluno_id = :id', {id});
+
+    if(bairro){
+      query.andWhere('endereco.bairro LIKE :bairro', {bairro: bairro + '%'});
+    }
+
+    return await query.execute();
   }
 
   private async getAlunoByCpf(cpf: string): Promise<Aluno[]> {
-    return await this.query(`SELECT * FROM aluno WHERE aluno.cpf = '${cpf}'`);
+    const query = this.createQueryBuilder('aluno').select('*').where('aluno.cpf = :cpf', {cpf});
+
+    return await query.execute();
   }
 
   private convertDtoToEntity(alunoDto: AlunoDto): Aluno {

@@ -9,4 +9,5 @@ export const typeOrmConfig: TypeOrmModuleOptions = {
   database: 'db',
   entities: [__dirname + '/../**/*.entity.{js,ts}'],
   synchronize: false, //manter a definição do script .sql
+  logging: true,
 };
