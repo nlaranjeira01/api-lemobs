@@ -8,6 +8,8 @@ import {
 import { Endereco } from '../enderecos/endereco.entity';
 import { NotFoundException } from '@nestjs/common';
 import { FilterAlunosByNotaDto } from './dto/filter-alunos-by-nota.dto';
+import { plainToClass } from 'class-transformer';
+import moment = require('moment');
 
 @EntityRepository(Aluno)
 export class AlunoRepository extends Repository<Aluno> {
@@ -27,7 +29,7 @@ export class AlunoRepository extends Repository<Aluno> {
 
   async createAluno(alunoDto: AlunoDto): Promise<Aluno> {
     const aluno = this.convertDtoToEntity(alunoDto);
-    console.log(aluno);
+
     try {
       await aluno.save();
     } catch (error) {
@@ -53,7 +55,7 @@ export class AlunoRepository extends Repository<Aluno> {
   }
 
   async getAboveAverage(): Promise<Aluno[]> {
-    const alunos: Aluno[] = await this.query(
+    const alunos : Aluno[] = await this.query(
       'SELECT * FROM aluno\
       WHERE aluno.nota > \
       (SELECT AVG(aluno.nota) FROM aluno)',
@@ -63,14 +65,14 @@ export class AlunoRepository extends Repository<Aluno> {
       aluno.enderecos = await this.getEnderecos(aluno.id, null);
     }
 
-    return alunos;
+    return plainToClass(Aluno, alunos);
   }
 
   async filterAlunosByNota(
     filterAlunosByNotaDto: FilterAlunosByNotaDto,
   ): Promise<Aluno[]> {
     const { criterio, nota } = filterAlunosByNotaDto;
-    const alunos = await this.query(`
+    const alunos : Aluno[]= await this.query(`
       SELECT * FROM aluno
       WHERE aluno.nota ${criterio} ${nota}`);
 
@@ -78,7 +80,7 @@ export class AlunoRepository extends Repository<Aluno> {
       aluno.enderecos = await this.getEnderecos(aluno.id, null);
     }
 
-    return alunos;
+    return plainToClass(Aluno, alunos);
   }
 
   /*

@@ -24,7 +24,9 @@ export class IsDateStringConstraint implements ValidatorConstraintInterface {
       return false;
     }
 
-    const moment_date = moment(date, 'DD/MM/YYYY');
+    const moment_date = moment(
+      new Date(parseInt(parts[2]), parseInt(parts[1]) - 1, parseInt(parts[0])),
+    );
 
     return moment_date.isValid();
   }
