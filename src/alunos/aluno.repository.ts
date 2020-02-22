@@ -64,8 +64,10 @@ export class AlunoRepository extends Repository<Aluno> {
 
     const alunos: Aluno[] = await query.execute();
 
-    for (const aluno of alunos) {
-      aluno.enderecos = await this.getEnderecos(aluno.id, null);
+    const enderecosList : Endereco[][] = await this.getEnderecosForMany(alunos);
+    
+    for(let i = 0; i < alunos.length; i++){
+      alunos[i].enderecos = enderecosList[i];
     }
 
     return plainToClass(Aluno, alunos); //a query acima retorna plain objects, logo é necessário convertê-los para a classe Aluno
@@ -87,11 +89,14 @@ export class AlunoRepository extends Repository<Aluno> {
       console.log(query.getSql());
     const alunos: Aluno[] = await query.execute();
 
-    for (const aluno of alunos) {
-      aluno.enderecos = await this.getEnderecos(aluno.id, null);
+    const enderecosList : Endereco[][] = await this.getEnderecosForMany(alunos);
+    
+    for(let i = 0; i < alunos.length; i++){
+      alunos[i].enderecos = enderecosList[i];
     }
 
-    return plainToClass(Aluno, alunos);
+    return plainToClass(Aluno, alunos); //a query acima retorna plain objects, logo é necessário convertê-los para a classe Aluno
+
   }
 
   /*
@@ -122,11 +127,18 @@ export class AlunoRepository extends Repository<Aluno> {
       .where('aluno.id = :id', { id: id })
       .execute();
 
+    const savePromises : Promise<Endereco>[] = [];
+
     for (const endereco of aluno.enderecos) {
       endereco.aluno = aluno;
-      await endereco.save();
-      delete endereco.aluno;
+      savePromises.push(endereco.save());
     }
+
+    await Promise.all(savePromises).then(()=>{
+      for(const endereco of aluno.enderecos){
+        delete endereco.aluno;
+      }
+    })
 
     return aluno;
   }
@@ -183,5 +195,16 @@ export class AlunoRepository extends Repository<Aluno> {
       .from(Endereco)
       .where('aluno_id = :id', { id: aluno_id })
       .execute();
+  }
+
+  private async getEnderecosForMany(alunos : Aluno[]) : Promise<Endereco[][]>{
+    const enderecosPromises : Promise<Endereco[]>[]= [];
+    
+    for(const aluno of alunos){
+      enderecosPromises.push(this.getEnderecos(aluno.id, null));
+    }
+
+    return await Promise.all(enderecosPromises);
+
   }
 }
